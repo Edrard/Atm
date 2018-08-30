@@ -13,32 +13,34 @@ class DbBase implements IntDbBase
     protected $fields = array();
     protected $prefix = '';
     protected $mtype = 'MyISAM'; 
+    protected $class;
 
     public function __construct(QueryBuilderHandler $db,$table,$prefix = ''){
-        MyLog::init();
+        $this->class = string_split_last(get_class($this));
+        MyLog::init('logs',$this->class);
         $this->db = $db;
         $this->changeTable($table);
         $this->changePrefix($prefix);
     } 
     public function changePrefix($prefix){
         if($prefix != $this->prefix){
-            MyLog::info("[".get_class($this)."] Prefix changed on: ".$prefix);
+            MyLog::info("Prefix changed on: ".$prefix,array(),$this->class);
         } 
         $this->prefix = $prefix;
     }
     public function setFields($fields){
         if($fields != $this->fields){
-            MyLog::info("Setted Fields");
+            MyLog::info("Setted Fields",array(),$this->class);
         } 
         $this->fields = $fields;
     }
     public function changeTable($table){
         try{
             if(!$table && !is_string($table)){
-                throw new CriticalAtmException("[".get_class($this)."] Table name not setted");
+                throw new CriticalAtmException("Table name not setted",array(),$this->class);
             }
             if($table != $this->table){
-                MyLog::info("[".get_class($this)."] Table changed on: ".$table);
+                MyLog::info("Table changed on: ".$table,array(),$this->class);
             } 
             $this->table = $table;    
         }Catch(\CriticalAtmException $e){

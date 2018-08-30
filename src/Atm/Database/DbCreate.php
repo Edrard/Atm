@@ -12,11 +12,12 @@ class DbCreate
     private $db_connect = FALSE;
 
     function __construct(array $config){
+        MyLog::init();
         $connection = new Connection('mysql', $config);
         try{
             $this->db_connect = new QueryBuilderHandler($connection);
         }Catch(\Exception $e){
-            MyLog::critical("Can't connect to Database");
+            MyLog::critical("[".get_class($this)."] Can't connect to Database");
             die($e->getMessage());
         }    
     }

@@ -48,7 +48,7 @@ class DbManipulate extends DbBase implements IntDbManipulate
         $sql = "CREATE TABLE IF NOT EXISTS `".$this->prefix.$this->table."` (
         ".(implode(',',$in))."
         ) ENGINE=".$this->mtype." DEFAULT CHARSET=utf8;"; 
-        MyLog::info("[".get_class($this).'] Creating table: '.$this->prefix.$this->table.' with columns: '.(implode(',',$in)));
+        MyLog::info('Creating table: '.$this->prefix.$this->table.' with columns: '.(implode(',',$in)),array(),$this->class);
         $this->db->query($sql);
         foreach($addopts['theme'] as $key => $val){
            $this->changeRowCustom($key,$val,$addopts['opts'][$key]);       
@@ -78,7 +78,7 @@ class DbManipulate extends DbBase implements IntDbManipulate
             }
             $sql = 'ALTER TABLE `'.$this->prefix.$this->table.'`  ADD `'.$rowname.'` '.$rowopt['type'].$rowopt['size'].' NOT NULL '.$custome;
             $this->db->query($sql);
-            MyLog::info("[".get_class($this).'] New row in table: '.$this->prefix.$this->table. ' name - '.$rowname.' value - '.json_encode($rowopt));
+            MyLog::info('New row in table: '.$this->prefix.$this->table. ' name - '.$rowname.' value - '.json_encode($rowopt),array(),$this->class);
         }
     }
     private function changeRow($rowname,$rowopt,$custom = ''){     // rowopt - array(type,size)  type - MySQL type, size if needed
@@ -88,7 +88,7 @@ class DbManipulate extends DbBase implements IntDbManipulate
             }
             $sql = 'ALTER TABLE `'.$this->prefix.$this->table.'` CHANGE `'.$rowname.'` `'.$rowname.'` '.$rowopt['type'].$rowopt['size'].' NOT NULL '.$custom;
             $this->db->query($sql);
-            MyLog::info("[".get_class($this).'] Update row in table: '.$this->prefix.$this->table. ' name - '.$rowname.' value - '.json_encode($rowopt));
+            MyLog::info('Update row in table: '.$this->prefix.$this->table. ' name - '.$rowname.' value - '.json_encode($rowopt),array(),$this->class);
         }
     }
     public function updateTable(){
@@ -116,21 +116,21 @@ class DbManipulate extends DbBase implements IntDbManipulate
             }
         } 
         if(empty($new) && empty($upd)){
-            MyLog::info("[".get_class($this).'] No changes in table: '.$this->prefix.$this->table);    
+            MyLog::info('No changes in table: '.$this->prefix.$this->table,array(),$this->class);    
         }
     }
     public function truncateTable(){
         if($this->checkTableNameExist() !== FALSE){
             $sql = 'TRUNCATE TABLE '.$this->prefix.$this->table;
             $this->db->query($sql);
-            MyLog::info("[".get_class($this).'] Truncate table: '.$this->prefix.$this->table);
+            MyLog::info('Truncate table: '.$this->prefix.$this->table,array(),$this->class);
         }
     }
     public function deleteTable(){
         if($this->checkTableNameExist() !== FALSE){
             $sql = 'DROP TABLE `'.$this->prefix.$this->table.'`;';
             $this->db->query($sql);
-            MyLog::info("[".get_class($this).'] Dropped table: '.$this->prefix.$this->table);
+            MyLog::info('Dropped table: '.$this->prefix.$this->table,array(),$this->class);
         }
     }
     public function checkTableNameExist(){

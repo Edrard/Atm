@@ -21,8 +21,8 @@ class Atm
 
     function __construct(DbManipulate $db, DataManipulate $dm, $separator = '|')
     {  
-        MyLog::init();
-        MyLog::changeType(array('warning','error','critical'));
+        MyLog::init('logs','atm');
+        MyLog::changeType(array('warning','error','critical'),'atm');
         $this->db = $db;
         $this->dm = $dm;
         $this->changeSeparator($separator);
@@ -32,8 +32,8 @@ class Atm
     * 
     */
     public function fullLog(){       
-        MyLog::changeType(array('info','warning','error','critical'));
-        MyLog::info("Full Log on"); 
+        MyLog::changeType(array('info','warning','error','critical'),'atm');
+        MyLog::info("Full Log on",array(),'atm'); 
     }
     /**
     * Change separtor
@@ -42,7 +42,7 @@ class Atm
     */
     public function changeSeparator($separator){
         if($separator != $this->separator){
-            MyLog::info("Separator change on: ".$separator);
+            MyLog::info("Separator change on: ".$separator,array(),'atm');
         } 
         $this->separator = $separator;
     }
@@ -56,11 +56,11 @@ class Atm
     */
     public function constructData(array $data = array(),array $add = array(),array $unset = array()){
         if(empty($data)){
-            MyLog::warning("Empty Array Gived");
+            MyLog::warning("Empty Array Gived",array(),'atm');
             return FALSE;
         }
         if(!is_array($data)){
-            MyLog::error("Data not an array");
+            MyLog::error("Data not an array",array(),'atm');
             return FALSE;
         } 
         $add = $this->customAddOptions($add);
@@ -105,7 +105,7 @@ class Atm
     */
     public function insertData(){
         $this->_insertData($this->data);
-        MyLog::info("Single data to table ".$this->db->getCurrentTable());   
+        MyLog::info("Single data to table ".$this->db->getCurrentTable(),array(),'atm');  
         return $this;
     }
     /**
@@ -121,7 +121,7 @@ class Atm
     */
     public function truncateTable(){
         $this->db->truncateTable();
-        MyLog::info("Truncating table ".$this->db->getCurrentTable());
+        MyLog::info("Truncating table ".$this->db->getCurrentTable(),array(),'atm');
         return $this;
     }
     /**
@@ -130,7 +130,7 @@ class Atm
     */
     public function dropTable(){
         $this->db->deleteTable();
-        MyLog::info("Drop table ".$this->db->getCurrentTable());
+        MyLog::info("Drop table ".$this->db->getCurrentTable(),array(),'atm');
         return $this;
     }
     /**
@@ -142,7 +142,7 @@ class Atm
     public function changeTable($table){
         $this->db->changeTable($table);
         $this->dm->changeTable($table);
-        MyLog::info("Changing table to ".$table);
+        MyLog::info("Changing table to ".$table,array(),'atm');
         return $this;
     }
     /**
@@ -154,7 +154,7 @@ class Atm
     public function changePrefix($prefix){
         $this->db->changePrefix($prefix);
         $this->dm->changePrefix($prefix);
-        MyLog::info("Changing prefix to ".$prefix);
+        MyLog::info("Changing prefix to ".$prefix,array(),'atm');
         return $this;
     }
     /**
@@ -189,7 +189,7 @@ class Atm
         if($count >= $batch){
             $this->_insertData($this->batch_data); 
             $this->ressetBatch();  
-            MyLog::info("Inserted number of Rows - ".$count." to table ".$this->db->getCurrentTable());
+            MyLog::info("Inserted number of Rows - ".$count." to table ".$this->db->getCurrentTable(),array(),'atm');
         }
         return $this;    
     }
