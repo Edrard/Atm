@@ -34,6 +34,7 @@ use edrard\Atm\Database\DbManipulate;
 use edrard\Atm\Database\DataManipulate;
 use edrard\Atm\Database\DbCreate;
 
+
 $config = array(
     'driver'    => 'mysql', // Db driver
     'host'      => 'localhost',
@@ -45,13 +46,18 @@ $config = array(
     'prefix'    => '', // Table prefix, optional
 );
 $db = new DbCreate($config);
-$table_name = 'table';
-$atm = new Atm(new DbManipulate($db->getDbConnect(),$table_name),new DataManipulate($db->getDbConnect(),$table_name));
+$atm = new Atm(new DbManipulate($db->getDbConnect(),'table'),new DataManipulate($db->getDbConnect(),'table'));
 $atm->fullLog();
 $atm->dropTable();
 foreach($data as $key => $val){
-    $atm->constructData($val,array('id' => array('value' => $key, 'index' => TRUE), 'time' => array('value' => 1343535*$key, 'index' => TRUE),'type' => array('value' => 'ru', 'index' => TRUE)))->
-    checkMysql()->insertDataBatch(3);
+    $additional_data = array(
+        'id' => array('value' => $key, 'index' => TRUE), 
+        'time' => array('value' => 1343535*$key, 'index' => TRUE),
+        'type' => array('value' => 'ru', 'index' => TRUE)
+    );
+    $atm->constructData($val,$additional_data)
+    ->checkMysql()
+    ->insertDataBatch(3);
 }
 $atm->insertFinish();
 $atm->getData();
