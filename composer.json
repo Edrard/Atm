@@ -1,0 +1,37 @@
+{
+    "name": "edrard/Packadges/ATM",
+    "description": "Array to Mysql Library",
+    "type": "library",
+    "homepage": "https://github.com/Edrard/ATM",
+    "license": "MIT",
+    "authors": [{
+        "name": "Edrard",
+        "email": "demonand@gmail.com"
+    }],
+    "repositories": [
+        {
+            "type": "git",
+            "url": "https://github.com/Edrard/function.git"
+        },
+        {
+            "type": "git",
+            "url": "https://github.com/Edrard/MyLog.git"
+        },
+        {
+            "type": "git",
+            "url": "https://github.com/Edrard/ArrayStrConv.git"
+        }
+    ],
+    "require": {
+        "php": ">=5.4",
+        "edrard/function": "dev-master",
+        "edrard/Packadges/ArrayStrConv": "dev-master",
+        "edrard/MyLog": "dev-master",
+        "usmanhalalit/pixie": "^2.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "edrard\\Atm\\": "src/Atm"
+        }
+    }
+}
