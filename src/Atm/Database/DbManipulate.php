@@ -55,7 +55,7 @@ class DbManipulate extends DbBase implements IntDbManipulate
         }
     }
     private function generateCustom($rowname,$opts){
-        $custome = '';
+        $custom = '';
         if(isset($opts['auto_inc']) && $opts['auto_inc'] !== FALSE){
             $custom = 'AUTO_INCREMENT , ADD PRIMARY KEY (  `'.$rowname.'` )';   
         }elseif(isset($opts['primary']) && $opts['primary'] !== FALSE){
