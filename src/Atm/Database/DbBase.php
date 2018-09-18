@@ -18,10 +18,15 @@ class DbBase implements IntDbBase
     public function __construct(QueryBuilderHandler $db,$table,$prefix = ''){
         $this->class = string_split_last(get_class($this));
         MyLog::init('logs',$this->class);
+        MyLog::changeType(array('warning','error','critical'),$this->class);
         $this->db = $db;
         $this->changeTable($table);
         $this->changePrefix($prefix);
     } 
+    public function fullLog(){       
+        MyLog::changeType(array('info','warning','error','critical'),$this->class);
+        MyLog::info("Full Log on",array(),$this->class); 
+    }
     public function changePrefix($prefix){
         if($prefix != $this->prefix){
             MyLog::info("Prefix changed on: ".$prefix,array(),$this->class);
