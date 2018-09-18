@@ -115,6 +115,9 @@ class Atm
     private function _insertData($data){
         $this->dm->insertData($data);
     }
+    private function _generateData($data){
+        return $this->dm->generateData($data);
+    }
     /**
     * Truncate current Table
     * 
@@ -193,11 +196,28 @@ class Atm
         }
         return $this;    
     }
+    public function generateDataBatch($batch){
+        if(!empty($this->data)){
+            $this->batch_data[] = $this->data;
+        }
+        $this->data = array();
+        $sql = '';
+        $count = count($this->batch_data);
+        if($count >= $batch){
+            $sql = $this->_generateData($this->batch_data); 
+            $this->ressetBatch();  
+            MyLog::info("Sql generated for number of Rows - ".$count." to table ".$this->db->getCurrentTable(),array(),'atm');
+        }
+        return $sql;    
+    }
     /**
     * Finish after Batch insert
     * 
     */
     public function insertFinish(){
         return $this->insertDataBatch(1);
+    }
+    public function generateFinish(){
+        return $this->generateDataBatch(1);
     }
 }

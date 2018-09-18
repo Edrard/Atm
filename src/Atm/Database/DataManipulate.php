@@ -21,5 +21,26 @@ class DataManipulate extends DbBase implements IntDataManipulate
             return $this->db->query($custom)->setFetchMode(\PDO::FETCH_ASSOC)->get(); 
         }
     }
-
+    public function generateData(array $data){
+        if(!empty($data)){
+            $fields =  array();
+            $insert = array();
+            foreach($data as $key => $vals){
+                foreach(array_keys($vals) as $field){
+                    $fields[$field] = $field;
+                }
+            }
+            foreach($data as $key => $vals){
+                foreach($fields as $field){
+                    $insert[$key][] = isset($vals[$field]) ? $vals[$field] : '';
+                }
+            }
+            foreach($insert as $key => $val){
+                $insert[$key] = "'".implode("','", $val)."'";    
+            }
+            $sql = "INSERT INTO `".$this->prefix.$this->table."` (`" . implode("`,`", $fields ) . "`) VALUES (".
+            implode('),(', $insert).");";
+            return $sql;
+        }   
+    }
 }
