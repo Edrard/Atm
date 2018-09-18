@@ -39,7 +39,7 @@ class ConstructData
             $tmp['type'] = $comp_2['type'];
             $tmp['size'] = max($comp_1['size'],$comp_2['size']);
             if($unset === TRUE){
-                if($comp_1['size'] == $comp_2['size']){
+                if($comp_1['size'] >= $comp_2['size']){
                     return array();
                 }
             }
