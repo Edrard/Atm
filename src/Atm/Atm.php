@@ -196,6 +196,11 @@ class Atm
         }
         return $this;    
     }
+    /**
+    * Generate SQL queries 
+    * 
+    * @param mixed $batch
+    */
     public function generateDataBatch($batch){
         if(!empty($this->data)){
             $this->batch_data[] = $this->data;

@@ -4,7 +4,7 @@ namespace edrard\Atm\Database;
 use edrard\Log\MyLog;
 use Pixie\QueryBuilder\QueryBuilderHandler;
 use edrard\Atm\Exception\CriticalAtmException;
-use edrard\Atm\Database\IntDbBase;
+use edrard\Atm\Database\IntDbBase;     
 
 class DbBase implements IntDbBase
 {
